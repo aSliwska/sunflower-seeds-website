@@ -10,8 +10,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-const dbname = '1sliwska';
-const url = 'mongodb://1sliwska:pass1sliwska@172.20.44.25/1sliwska';
+const dbname = '********';
+const url = 'mongodb:********';
 
 mongodb.MongoClient.connect(url, function(err, client) {
 	if (err) 
@@ -30,8 +30,8 @@ app.use(express.static(__dirname + '/'));
 
 
 
-const accessTokenSecret = 'somerando43maccessken';
-const refreshTokenSecret = 'someranomstringforr6e8frehtoken'; 
+const accessTokenSecret = '********';
+const refreshTokenSecret = '********'; 
 var refreshTokens = [];
 
 const authenticateJWT = (req, res, next) => {
