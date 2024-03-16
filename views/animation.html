@@ -1,0 +1,751 @@
+<article>
+    <h2>Przedstawienie ułamków na spirali</h3>
+    Poniższa animacja jest bardzo prosta w działaniu: od centrum do krawędzi narysowane są okręgi. Górny suwak oraz pole liczbowe kontrolują część pełnego obrotu x=[0, 1], 
+    o który będą one wychylone. Najbardziej wewnętrzny okrąg obraca się tylko o 1x, kolejny o 2x, trzeci o 3x, itd.
+    <br/><br/>
+    Dzięki takiemu przedstawieniu ułamków jesteśmy w stanie zobaczyć wiele ich matematycznych właściwości. Na przykład ułamek 0.2 możemy zapisać jako 1/5 
+    i dla niego animacja pokaże 5 wyraźnie zaznaczonych gałęzi. Tak samo dla 0.8, czyli 4/5.
+    <br/><br/>
+    Najciekawesze jednak okazują się tutaj być liczby niewymierne. Liczba 1/pi = 0.318310 pokazuje blisko centrum 3 gałęzie okręgów, które następnie rozchodzą się 
+    na 22 gałęzie (dobrym przybliżeniem 1/pi jest 7/22). Ułamkowa część złotego podziału = 0.618034 pokazuje natomiast najbardziej optymalne rozłożenie okręgów na jak najmniejszej powierzchni.
+    Jest ono także uznawane za rozkład nasion w słoneczniku!
+</article>
+<div id="animation_wrapper">
+    <div class="flex_wrapper center" style="flex-direction: row;">
+        <form class="row">
+            <div class="left_column">
+                <input id="angle_slider" type="range" class="slider" min="0" max="1" step="0.000001" value="0" oninput="angle_value.value=this.value" onchange="rotateSeeds(this.value)"/>
+            </div>
+            <table class="right_column"><tr>
+                <td><label for="angle_value">Część pełnego obrotu:</label></td>
+                <td><input id="angle_value" type="number" form="" min="0" max="1" step="0.000001" value="0" oninput="angle_slider.value=this.value" onchange="rotateSeeds(this.value)"/></td>
+            </tr></table>
+        </form>
+        <div class="row">
+            <svg encoding="utf-8" id="svg_box" class="left_column" width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+                <circle id="ccenter" cx="300" cy="300" r="1" stroke="black" stroke-width="1"/>
+                <circle id="c0" class="seed" cx="310.0" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c1" class="seed" cx="310.4179104477612" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c2" class="seed" cx="310.8358208955224" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c3" class="seed" cx="311.25373134328356" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c4" class="seed" cx="311.67164179104475" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c5" class="seed" cx="312.089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c6" class="seed" cx="312.5074626865672" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c7" class="seed" cx="312.92537313432837" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c8" class="seed" cx="313.34328358208955" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c9" class="seed" cx="313.76119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c10" class="seed" cx="314.17910447761193" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c11" class="seed" cx="314.5970149253731" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c12" class="seed" cx="315.0149253731343" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c13" class="seed" cx="315.43283582089555" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c14" class="seed" cx="315.85074626865674" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c15" class="seed" cx="316.2686567164179" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c16" class="seed" cx="316.6865671641791" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c17" class="seed" cx="317.1044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c18" class="seed" cx="317.5223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c19" class="seed" cx="317.94029850746267" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c20" class="seed" cx="318.35820895522386" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c21" class="seed" cx="318.77611940298505" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c22" class="seed" cx="319.1940298507463" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c23" class="seed" cx="319.6119402985075" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c24" class="seed" cx="320.02985074626866" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c25" class="seed" cx="320.44776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c26" class="seed" cx="320.86567164179104" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c27" class="seed" cx="321.2835820895522" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c28" class="seed" cx="321.7014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c29" class="seed" cx="322.1194029850746" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c30" class="seed" cx="322.53731343283584" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c31" class="seed" cx="322.95522388059703" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c32" class="seed" cx="323.3731343283582" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c33" class="seed" cx="323.7910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c34" class="seed" cx="324.2089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c35" class="seed" cx="324.6268656716418" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c36" class="seed" cx="325.04477611940297" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c37" class="seed" cx="325.46268656716416" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c38" class="seed" cx="325.8805970149254" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c39" class="seed" cx="326.2985074626866" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c40" class="seed" cx="326.7164179104478" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c41" class="seed" cx="327.13432835820896" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c42" class="seed" cx="327.55223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c43" class="seed" cx="327.97014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c44" class="seed" cx="328.3880597014925" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c45" class="seed" cx="328.8059701492537" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c46" class="seed" cx="329.22388059701495" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c47" class="seed" cx="329.64179104477614" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c48" class="seed" cx="330.05970149253733" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c49" class="seed" cx="330.4776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c50" class="seed" cx="330.8955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c51" class="seed" cx="331.3134328358209" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c52" class="seed" cx="331.7313432835821" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c53" class="seed" cx="332.14925373134326" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c54" class="seed" cx="332.56716417910445" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c55" class="seed" cx="332.9850746268657" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c56" class="seed" cx="333.4029850746269" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c57" class="seed" cx="333.82089552238807" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c58" class="seed" cx="334.23880597014926" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c59" class="seed" cx="334.65671641791045" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c60" class="seed" cx="335.07462686567163" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c61" class="seed" cx="335.4925373134328" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c62" class="seed" cx="335.910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c63" class="seed" cx="336.32835820895525" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c64" class="seed" cx="336.74626865671644" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c65" class="seed" cx="337.1641791044776" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c66" class="seed" cx="337.5820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c67" class="seed" cx="338.0" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c68" class="seed" cx="338.4179104477612" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c69" class="seed" cx="338.8358208955224" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c70" class="seed" cx="339.25373134328356" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c71" class="seed" cx="339.67164179104475" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c72" class="seed" cx="340.089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c73" class="seed" cx="340.5074626865672" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c74" class="seed" cx="340.92537313432837" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c75" class="seed" cx="341.34328358208955" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c76" class="seed" cx="341.76119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c77" class="seed" cx="342.17910447761193" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c78" class="seed" cx="342.5970149253731" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c79" class="seed" cx="343.0149253731343" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c80" class="seed" cx="343.43283582089555" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c81" class="seed" cx="343.85074626865674" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c82" class="seed" cx="344.2686567164179" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c83" class="seed" cx="344.6865671641791" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c84" class="seed" cx="345.1044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c85" class="seed" cx="345.5223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c86" class="seed" cx="345.94029850746267" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c87" class="seed" cx="346.35820895522386" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c88" class="seed" cx="346.77611940298505" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c89" class="seed" cx="347.1940298507463" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c90" class="seed" cx="347.6119402985075" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c91" class="seed" cx="348.02985074626866" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c92" class="seed" cx="348.44776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c93" class="seed" cx="348.86567164179104" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c94" class="seed" cx="349.2835820895522" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c95" class="seed" cx="349.7014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c96" class="seed" cx="350.11940298507466" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c97" class="seed" cx="350.53731343283584" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c98" class="seed" cx="350.95522388059703" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c99" class="seed" cx="351.3731343283582" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c100" class="seed" cx="351.7910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c101" class="seed" cx="352.2089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c102" class="seed" cx="352.6268656716418" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c103" class="seed" cx="353.04477611940297" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c104" class="seed" cx="353.46268656716416" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c105" class="seed" cx="353.88059701492534" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c106" class="seed" cx="354.2985074626866" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c107" class="seed" cx="354.7164179104478" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c108" class="seed" cx="355.13432835820896" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c109" class="seed" cx="355.55223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c110" class="seed" cx="355.97014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c111" class="seed" cx="356.3880597014925" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c112" class="seed" cx="356.8059701492537" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c113" class="seed" cx="357.22388059701495" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c114" class="seed" cx="357.64179104477614" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c115" class="seed" cx="358.05970149253733" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c116" class="seed" cx="358.4776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c117" class="seed" cx="358.8955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c118" class="seed" cx="359.3134328358209" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c119" class="seed" cx="359.7313432835821" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c120" class="seed" cx="360.14925373134326" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c121" class="seed" cx="360.56716417910445" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c122" class="seed" cx="360.98507462686564" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c123" class="seed" cx="361.4029850746269" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c124" class="seed" cx="361.82089552238807" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c125" class="seed" cx="362.23880597014926" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c126" class="seed" cx="362.65671641791045" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c127" class="seed" cx="363.07462686567163" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c128" class="seed" cx="363.4925373134328" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c129" class="seed" cx="363.910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c130" class="seed" cx="364.32835820895525" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c131" class="seed" cx="364.74626865671644" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c132" class="seed" cx="365.1641791044776" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c133" class="seed" cx="365.5820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c134" class="seed" cx="366.0" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c135" class="seed" cx="366.4179104477612" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c136" class="seed" cx="366.8358208955224" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c137" class="seed" cx="367.25373134328356" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c138" class="seed" cx="367.67164179104475" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c139" class="seed" cx="368.08955223880594" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c140" class="seed" cx="368.5074626865672" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c141" class="seed" cx="368.92537313432837" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c142" class="seed" cx="369.34328358208955" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c143" class="seed" cx="369.76119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c144" class="seed" cx="370.17910447761193" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c145" class="seed" cx="370.5970149253731" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c146" class="seed" cx="371.0149253731343" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c147" class="seed" cx="371.43283582089555" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c148" class="seed" cx="371.85074626865674" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c149" class="seed" cx="372.2686567164179" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c150" class="seed" cx="372.6865671641791" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c151" class="seed" cx="373.1044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c152" class="seed" cx="373.5223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c153" class="seed" cx="373.94029850746267" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c154" class="seed" cx="374.35820895522386" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c155" class="seed" cx="374.77611940298505" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c156" class="seed" cx="375.19402985074623" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c157" class="seed" cx="375.6119402985075" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c158" class="seed" cx="376.02985074626866" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c159" class="seed" cx="376.44776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c160" class="seed" cx="376.86567164179104" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c161" class="seed" cx="377.2835820895522" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c162" class="seed" cx="377.7014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c163" class="seed" cx="378.11940298507466" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c164" class="seed" cx="378.53731343283584" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c165" class="seed" cx="378.95522388059703" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c166" class="seed" cx="379.3731343283582" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c167" class="seed" cx="379.7910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c168" class="seed" cx="380.2089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c169" class="seed" cx="380.6268656716418" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c170" class="seed" cx="381.04477611940297" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c171" class="seed" cx="381.46268656716416" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c172" class="seed" cx="381.88059701492534" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c173" class="seed" cx="382.29850746268653" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c174" class="seed" cx="382.7164179104478" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c175" class="seed" cx="383.13432835820896" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c176" class="seed" cx="383.55223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c177" class="seed" cx="383.97014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c178" class="seed" cx="384.3880597014925" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c179" class="seed" cx="384.8059701492537" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c180" class="seed" cx="385.22388059701495" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c181" class="seed" cx="385.64179104477614" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c182" class="seed" cx="386.05970149253733" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c183" class="seed" cx="386.4776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c184" class="seed" cx="386.8955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c185" class="seed" cx="387.3134328358209" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c186" class="seed" cx="387.7313432835821" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c187" class="seed" cx="388.14925373134326" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c188" class="seed" cx="388.56716417910445" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c189" class="seed" cx="388.98507462686564" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c190" class="seed" cx="389.4029850746269" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c191" class="seed" cx="389.82089552238807" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c192" class="seed" cx="390.23880597014926" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c193" class="seed" cx="390.65671641791045" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c194" class="seed" cx="391.07462686567163" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c195" class="seed" cx="391.4925373134328" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c196" class="seed" cx="391.910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c197" class="seed" cx="392.32835820895525" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c198" class="seed" cx="392.74626865671644" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c199" class="seed" cx="393.1641791044776" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c200" class="seed" cx="393.5820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c201" class="seed" cx="394.0" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c202" class="seed" cx="394.4179104477612" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c203" class="seed" cx="394.8358208955224" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c204" class="seed" cx="395.25373134328356" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c205" class="seed" cx="395.67164179104475" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c206" class="seed" cx="396.08955223880594" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c207" class="seed" cx="396.5074626865672" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c208" class="seed" cx="396.92537313432837" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c209" class="seed" cx="397.34328358208955" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c210" class="seed" cx="397.76119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c211" class="seed" cx="398.17910447761193" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c212" class="seed" cx="398.5970149253731" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c213" class="seed" cx="399.01492537313436" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c214" class="seed" cx="399.43283582089555" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c215" class="seed" cx="399.85074626865674" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c216" class="seed" cx="400.2686567164179" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c217" class="seed" cx="400.6865671641791" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c218" class="seed" cx="401.1044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c219" class="seed" cx="401.5223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c220" class="seed" cx="401.94029850746267" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c221" class="seed" cx="402.35820895522386" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c222" class="seed" cx="402.77611940298505" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c223" class="seed" cx="403.19402985074623" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c224" class="seed" cx="403.6119402985075" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c225" class="seed" cx="404.02985074626866" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c226" class="seed" cx="404.44776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c227" class="seed" cx="404.86567164179104" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c228" class="seed" cx="405.2835820895522" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c229" class="seed" cx="405.7014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c230" class="seed" cx="406.11940298507466" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c231" class="seed" cx="406.53731343283584" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c232" class="seed" cx="406.95522388059703" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c233" class="seed" cx="407.3731343283582" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c234" class="seed" cx="407.7910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c235" class="seed" cx="408.2089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c236" class="seed" cx="408.6268656716418" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c237" class="seed" cx="409.04477611940297" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c238" class="seed" cx="409.46268656716416" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c239" class="seed" cx="409.88059701492534" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c240" class="seed" cx="410.29850746268653" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c241" class="seed" cx="410.7164179104478" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c242" class="seed" cx="411.13432835820896" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c243" class="seed" cx="411.55223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c244" class="seed" cx="411.97014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c245" class="seed" cx="412.3880597014925" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c246" class="seed" cx="412.8059701492537" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c247" class="seed" cx="413.22388059701495" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c248" class="seed" cx="413.64179104477614" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c249" class="seed" cx="414.05970149253733" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c250" class="seed" cx="414.4776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c251" class="seed" cx="414.8955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c252" class="seed" cx="415.3134328358209" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c253" class="seed" cx="415.7313432835821" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c254" class="seed" cx="416.14925373134326" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c255" class="seed" cx="416.56716417910445" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c256" class="seed" cx="416.98507462686564" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c257" class="seed" cx="417.4029850746268" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c258" class="seed" cx="417.82089552238807" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c259" class="seed" cx="418.23880597014926" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c260" class="seed" cx="418.65671641791045" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c261" class="seed" cx="419.07462686567163" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c262" class="seed" cx="419.4925373134328" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c263" class="seed" cx="419.910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c264" class="seed" cx="420.32835820895525" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c265" class="seed" cx="420.74626865671644" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c266" class="seed" cx="421.1641791044776" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c267" class="seed" cx="421.5820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c268" class="seed" cx="422.0" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c269" class="seed" cx="422.4179104477612" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c270" class="seed" cx="422.8358208955224" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c271" class="seed" cx="423.25373134328356" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c272" class="seed" cx="423.67164179104475" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c273" class="seed" cx="424.08955223880594" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c274" class="seed" cx="424.5074626865672" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c275" class="seed" cx="424.92537313432837" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c276" class="seed" cx="425.34328358208955" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c277" class="seed" cx="425.76119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c278" class="seed" cx="426.17910447761193" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c279" class="seed" cx="426.5970149253731" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c280" class="seed" cx="427.0149253731343" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c281" class="seed" cx="427.43283582089555" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c282" class="seed" cx="427.85074626865674" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c283" class="seed" cx="428.2686567164179" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c284" class="seed" cx="428.6865671641791" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c285" class="seed" cx="429.1044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c286" class="seed" cx="429.5223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c287" class="seed" cx="429.94029850746267" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c288" class="seed" cx="430.35820895522386" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c289" class="seed" cx="430.77611940298505" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c290" class="seed" cx="431.19402985074623" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c291" class="seed" cx="431.6119402985075" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c292" class="seed" cx="432.02985074626866" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c293" class="seed" cx="432.44776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c294" class="seed" cx="432.86567164179104" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c295" class="seed" cx="433.2835820895522" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c296" class="seed" cx="433.7014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c297" class="seed" cx="434.11940298507466" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c298" class="seed" cx="434.53731343283584" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c299" class="seed" cx="434.95522388059703" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c300" class="seed" cx="435.3731343283582" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c301" class="seed" cx="435.7910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c302" class="seed" cx="436.2089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c303" class="seed" cx="436.6268656716418" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c304" class="seed" cx="437.04477611940297" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c305" class="seed" cx="437.46268656716416" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c306" class="seed" cx="437.88059701492534" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c307" class="seed" cx="438.29850746268653" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c308" class="seed" cx="438.7164179104477" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c309" class="seed" cx="439.13432835820896" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c310" class="seed" cx="439.55223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c311" class="seed" cx="439.97014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c312" class="seed" cx="440.3880597014925" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c313" class="seed" cx="440.80597014925377" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c314" class="seed" cx="441.22388059701495" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c315" class="seed" cx="441.64179104477614" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c316" class="seed" cx="442.05970149253733" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c317" class="seed" cx="442.4776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c318" class="seed" cx="442.8955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c319" class="seed" cx="443.3134328358209" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c320" class="seed" cx="443.7313432835821" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c321" class="seed" cx="444.14925373134326" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c322" class="seed" cx="444.56716417910445" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c323" class="seed" cx="444.98507462686564" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c324" class="seed" cx="445.4029850746268" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c325" class="seed" cx="445.820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c326" class="seed" cx="446.23880597014926" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c327" class="seed" cx="446.65671641791045" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c328" class="seed" cx="447.07462686567163" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c329" class="seed" cx="447.4925373134328" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c330" class="seed" cx="447.91044776119406" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c331" class="seed" cx="448.32835820895525" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c332" class="seed" cx="448.74626865671644" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c333" class="seed" cx="449.1641791044776" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c334" class="seed" cx="449.5820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c335" class="seed" cx="450.0" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c336" class="seed" cx="450.4179104477612" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c337" class="seed" cx="450.8358208955224" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c338" class="seed" cx="451.25373134328356" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c339" class="seed" cx="451.67164179104475" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c340" class="seed" cx="452.08955223880594" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c341" class="seed" cx="452.5074626865671" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c342" class="seed" cx="452.9253731343283" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c343" class="seed" cx="453.34328358208955" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c344" class="seed" cx="453.76119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c345" class="seed" cx="454.17910447761193" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c346" class="seed" cx="454.5970149253731" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c347" class="seed" cx="455.01492537313436" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c348" class="seed" cx="455.43283582089555" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c349" class="seed" cx="455.85074626865674" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c350" class="seed" cx="456.2686567164179" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c351" class="seed" cx="456.6865671641791" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c352" class="seed" cx="457.1044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c353" class="seed" cx="457.5223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c354" class="seed" cx="457.94029850746267" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c355" class="seed" cx="458.35820895522386" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c356" class="seed" cx="458.77611940298505" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c357" class="seed" cx="459.19402985074623" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c358" class="seed" cx="459.6119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c359" class="seed" cx="460.02985074626866" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c360" class="seed" cx="460.44776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c361" class="seed" cx="460.86567164179104" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c362" class="seed" cx="461.2835820895522" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c363" class="seed" cx="461.7014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c364" class="seed" cx="462.11940298507466" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c365" class="seed" cx="462.53731343283584" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c366" class="seed" cx="462.95522388059703" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c367" class="seed" cx="463.3731343283582" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c368" class="seed" cx="463.7910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c369" class="seed" cx="464.2089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c370" class="seed" cx="464.6268656716418" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c371" class="seed" cx="465.04477611940297" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c372" class="seed" cx="465.46268656716416" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c373" class="seed" cx="465.88059701492534" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c374" class="seed" cx="466.29850746268653" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c375" class="seed" cx="466.7164179104477" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c376" class="seed" cx="467.13432835820896" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c377" class="seed" cx="467.55223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c378" class="seed" cx="467.97014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c379" class="seed" cx="468.3880597014925" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c380" class="seed" cx="468.80597014925377" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c381" class="seed" cx="469.22388059701495" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c382" class="seed" cx="469.64179104477614" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c383" class="seed" cx="470.05970149253733" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c384" class="seed" cx="470.4776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c385" class="seed" cx="470.8955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c386" class="seed" cx="471.3134328358209" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c387" class="seed" cx="471.7313432835821" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c388" class="seed" cx="472.14925373134326" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c389" class="seed" cx="472.56716417910445" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c390" class="seed" cx="472.98507462686564" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c391" class="seed" cx="473.4029850746268" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c392" class="seed" cx="473.820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c393" class="seed" cx="474.23880597014926" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c394" class="seed" cx="474.65671641791045" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c395" class="seed" cx="475.07462686567163" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c396" class="seed" cx="475.4925373134328" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c397" class="seed" cx="475.91044776119406" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c398" class="seed" cx="476.32835820895525" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c399" class="seed" cx="476.74626865671644" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c400" class="seed" cx="477.1641791044776" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c401" class="seed" cx="477.5820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c402" class="seed" cx="478.0" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c403" class="seed" cx="478.4179104477612" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c404" class="seed" cx="478.8358208955224" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c405" class="seed" cx="479.25373134328356" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c406" class="seed" cx="479.67164179104475" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c407" class="seed" cx="480.08955223880594" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c408" class="seed" cx="480.5074626865671" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c409" class="seed" cx="480.9253731343283" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c410" class="seed" cx="481.34328358208955" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c411" class="seed" cx="481.76119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c412" class="seed" cx="482.17910447761193" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c413" class="seed" cx="482.5970149253731" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c414" class="seed" cx="483.01492537313436" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c415" class="seed" cx="483.43283582089555" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c416" class="seed" cx="483.85074626865674" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c417" class="seed" cx="484.2686567164179" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c418" class="seed" cx="484.6865671641791" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c419" class="seed" cx="485.1044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c420" class="seed" cx="485.5223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c421" class="seed" cx="485.94029850746267" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c422" class="seed" cx="486.35820895522386" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c423" class="seed" cx="486.77611940298505" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c424" class="seed" cx="487.19402985074623" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c425" class="seed" cx="487.6119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c426" class="seed" cx="488.02985074626866" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c427" class="seed" cx="488.44776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c428" class="seed" cx="488.86567164179104" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c429" class="seed" cx="489.2835820895522" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c430" class="seed" cx="489.7014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c431" class="seed" cx="490.11940298507466" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c432" class="seed" cx="490.53731343283584" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c433" class="seed" cx="490.95522388059703" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c434" class="seed" cx="491.3731343283582" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c435" class="seed" cx="491.7910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c436" class="seed" cx="492.2089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c437" class="seed" cx="492.6268656716418" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c438" class="seed" cx="493.04477611940297" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c439" class="seed" cx="493.46268656716416" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c440" class="seed" cx="493.88059701492534" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c441" class="seed" cx="494.29850746268653" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c442" class="seed" cx="494.7164179104477" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c443" class="seed" cx="495.13432835820896" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c444" class="seed" cx="495.55223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c445" class="seed" cx="495.97014925373134" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c446" class="seed" cx="496.3880597014925" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c447" class="seed" cx="496.80597014925377" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c448" class="seed" cx="497.22388059701495" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c449" class="seed" cx="497.64179104477614" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c450" class="seed" cx="498.05970149253733" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c451" class="seed" cx="498.4776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c452" class="seed" cx="498.8955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c453" class="seed" cx="499.3134328358209" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c454" class="seed" cx="499.7313432835821" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c455" class="seed" cx="500.14925373134326" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c456" class="seed" cx="500.56716417910445" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c457" class="seed" cx="500.98507462686564" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c458" class="seed" cx="501.4029850746268" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c459" class="seed" cx="501.820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c460" class="seed" cx="502.23880597014926" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c461" class="seed" cx="502.65671641791045" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c462" class="seed" cx="503.07462686567163" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c463" class="seed" cx="503.4925373134328" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c464" class="seed" cx="503.91044776119406" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c465" class="seed" cx="504.32835820895525" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c466" class="seed" cx="504.74626865671644" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c467" class="seed" cx="505.1641791044776" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c468" class="seed" cx="505.5820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c469" class="seed" cx="506.0" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c470" class="seed" cx="506.4179104477612" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c471" class="seed" cx="506.8358208955224" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c472" class="seed" cx="507.25373134328356" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c473" class="seed" cx="507.67164179104475" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c474" class="seed" cx="508.08955223880594" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c475" class="seed" cx="508.5074626865671" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c476" class="seed" cx="508.9253731343283" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c477" class="seed" cx="509.34328358208955" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c478" class="seed" cx="509.76119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c479" class="seed" cx="510.17910447761193" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c480" class="seed" cx="510.5970149253731" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c481" class="seed" cx="511.01492537313436" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c482" class="seed" cx="511.43283582089555" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c483" class="seed" cx="511.85074626865674" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c484" class="seed" cx="512.2686567164179" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c485" class="seed" cx="512.6865671641791" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c486" class="seed" cx="513.1044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c487" class="seed" cx="513.5223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c488" class="seed" cx="513.9402985074627" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c489" class="seed" cx="514.3582089552239" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c490" class="seed" cx="514.776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c491" class="seed" cx="515.1940298507462" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c492" class="seed" cx="515.6119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c493" class="seed" cx="516.0298507462686" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c494" class="seed" cx="516.4477611940299" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c495" class="seed" cx="516.8656716417911" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c496" class="seed" cx="517.2835820895523" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c497" class="seed" cx="517.7014925373135" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c498" class="seed" cx="518.1194029850747" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c499" class="seed" cx="518.5373134328358" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c500" class="seed" cx="518.955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c501" class="seed" cx="519.3731343283582" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c502" class="seed" cx="519.7910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c503" class="seed" cx="520.2089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c504" class="seed" cx="520.6268656716418" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c505" class="seed" cx="521.044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c506" class="seed" cx="521.4626865671642" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c507" class="seed" cx="521.8805970149253" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c508" class="seed" cx="522.2985074626865" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c509" class="seed" cx="522.7164179104477" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c510" class="seed" cx="523.1343283582089" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c511" class="seed" cx="523.5522388059701" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c512" class="seed" cx="523.9701492537313" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c513" class="seed" cx="524.3880597014925" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c514" class="seed" cx="524.8059701492537" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c515" class="seed" cx="525.223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c516" class="seed" cx="525.6417910447761" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c517" class="seed" cx="526.0597014925373" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c518" class="seed" cx="526.4776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c519" class="seed" cx="526.8955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c520" class="seed" cx="527.3134328358209" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c521" class="seed" cx="527.7313432835821" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c522" class="seed" cx="528.1492537313433" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c523" class="seed" cx="528.5671641791045" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c524" class="seed" cx="528.9850746268656" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c525" class="seed" cx="529.4029850746268" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c526" class="seed" cx="529.820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c527" class="seed" cx="530.2388059701493" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c528" class="seed" cx="530.6567164179105" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c529" class="seed" cx="531.0746268656717" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c530" class="seed" cx="531.4925373134329" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c531" class="seed" cx="531.9104477611941" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c532" class="seed" cx="532.3283582089553" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c533" class="seed" cx="532.7462686567164" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c534" class="seed" cx="533.1641791044776" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c535" class="seed" cx="533.5820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c536" class="seed" cx="534.0" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c537" class="seed" cx="534.4179104477612" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c538" class="seed" cx="534.8358208955224" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c539" class="seed" cx="535.2537313432836" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c540" class="seed" cx="535.6716417910447" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c541" class="seed" cx="536.0895522388059" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c542" class="seed" cx="536.5074626865671" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c543" class="seed" cx="536.9253731343283" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c544" class="seed" cx="537.3432835820895" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c545" class="seed" cx="537.7611940298507" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c546" class="seed" cx="538.1791044776119" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c547" class="seed" cx="538.5970149253731" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c548" class="seed" cx="539.0149253731344" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c549" class="seed" cx="539.4328358208955" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c550" class="seed" cx="539.8507462686567" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c551" class="seed" cx="540.2686567164179" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c552" class="seed" cx="540.6865671641791" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c553" class="seed" cx="541.1044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c554" class="seed" cx="541.5223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c555" class="seed" cx="541.9402985074627" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c556" class="seed" cx="542.3582089552239" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c557" class="seed" cx="542.776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c558" class="seed" cx="543.1940298507462" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c559" class="seed" cx="543.6119402985074" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c560" class="seed" cx="544.0298507462686" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c561" class="seed" cx="544.4477611940299" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c562" class="seed" cx="544.8656716417911" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c563" class="seed" cx="545.2835820895523" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c564" class="seed" cx="545.7014925373135" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c565" class="seed" cx="546.1194029850747" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c566" class="seed" cx="546.5373134328358" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c567" class="seed" cx="546.955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c568" class="seed" cx="547.3731343283582" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c569" class="seed" cx="547.7910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c570" class="seed" cx="548.2089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c571" class="seed" cx="548.6268656716418" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c572" class="seed" cx="549.044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c573" class="seed" cx="549.4626865671642" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c574" class="seed" cx="549.8805970149253" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c575" class="seed" cx="550.2985074626865" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c576" class="seed" cx="550.7164179104477" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c577" class="seed" cx="551.1343283582089" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c578" class="seed" cx="551.5522388059701" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c579" class="seed" cx="551.9701492537313" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c580" class="seed" cx="552.3880597014925" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c581" class="seed" cx="552.8059701492537" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c582" class="seed" cx="553.223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c583" class="seed" cx="553.6417910447761" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c584" class="seed" cx="554.0597014925373" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c585" class="seed" cx="554.4776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c586" class="seed" cx="554.8955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c587" class="seed" cx="555.3134328358209" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c588" class="seed" cx="555.7313432835821" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c589" class="seed" cx="556.1492537313433" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c590" class="seed" cx="556.5671641791045" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c591" class="seed" cx="556.9850746268656" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c592" class="seed" cx="557.4029850746268" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c593" class="seed" cx="557.820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c594" class="seed" cx="558.2388059701493" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c595" class="seed" cx="558.6567164179105" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c596" class="seed" cx="559.0746268656717" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c597" class="seed" cx="559.4925373134329" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c598" class="seed" cx="559.9104477611941" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c599" class="seed" cx="560.3283582089553" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c600" class="seed" cx="560.7462686567164" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c601" class="seed" cx="561.1641791044776" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c602" class="seed" cx="561.5820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c603" class="seed" cx="562.0" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c604" class="seed" cx="562.4179104477612" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c605" class="seed" cx="562.8358208955224" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c606" class="seed" cx="563.2537313432836" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c607" class="seed" cx="563.6716417910447" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c608" class="seed" cx="564.0895522388059" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c609" class="seed" cx="564.5074626865671" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c610" class="seed" cx="564.9253731343283" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c611" class="seed" cx="565.3432835820895" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c612" class="seed" cx="565.7611940298507" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c613" class="seed" cx="566.1791044776119" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c614" class="seed" cx="566.5970149253731" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c615" class="seed" cx="567.0149253731342" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c616" class="seed" cx="567.4328358208954" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c617" class="seed" cx="567.8507462686567" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c618" class="seed" cx="568.2686567164179" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c619" class="seed" cx="568.6865671641791" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c620" class="seed" cx="569.1044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c621" class="seed" cx="569.5223880597015" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c622" class="seed" cx="569.9402985074627" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c623" class="seed" cx="570.3582089552239" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c624" class="seed" cx="570.776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c625" class="seed" cx="571.1940298507462" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c626" class="seed" cx="571.6119402985075" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c627" class="seed" cx="572.0298507462687" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c628" class="seed" cx="572.4477611940299" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c629" class="seed" cx="572.8656716417911" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c630" class="seed" cx="573.2835820895523" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c631" class="seed" cx="573.7014925373135" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c632" class="seed" cx="574.1194029850747" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c633" class="seed" cx="574.5373134328358" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c634" class="seed" cx="574.955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c635" class="seed" cx="575.3731343283582" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c636" class="seed" cx="575.7910447761194" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c637" class="seed" cx="576.2089552238806" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c638" class="seed" cx="576.6268656716418" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c639" class="seed" cx="577.044776119403" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c640" class="seed" cx="577.4626865671642" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c641" class="seed" cx="577.8805970149253" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c642" class="seed" cx="578.2985074626865" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c643" class="seed" cx="578.7164179104477" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c644" class="seed" cx="579.1343283582089" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c645" class="seed" cx="579.5522388059701" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c646" class="seed" cx="579.9701492537313" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c647" class="seed" cx="580.3880597014925" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c648" class="seed" cx="580.8059701492537" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c649" class="seed" cx="581.2238805970148" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c650" class="seed" cx="581.641791044776" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c651" class="seed" cx="582.0597014925373" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c652" class="seed" cx="582.4776119402985" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c653" class="seed" cx="582.8955223880597" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c654" class="seed" cx="583.3134328358209" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c655" class="seed" cx="583.7313432835821" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c656" class="seed" cx="584.1492537313433" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c657" class="seed" cx="584.5671641791045" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c658" class="seed" cx="584.9850746268656" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c659" class="seed" cx="585.4029850746269" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c660" class="seed" cx="585.8208955223881" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c661" class="seed" cx="586.2388059701493" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c662" class="seed" cx="586.6567164179105" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c663" class="seed" cx="587.0746268656717" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c664" class="seed" cx="587.4925373134329" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c665" class="seed" cx="587.9104477611941" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c666" class="seed" cx="588.3283582089553" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c667" class="seed" cx="588.7462686567164" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c668" class="seed" cx="589.1641791044776" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+                <circle id="c669" class="seed" cx="589.5820895522388" cy="300" r="3" stroke="black" stroke-width="1" fill="none"/>
+            </svg>
+            <form class="floating_box right_column" style="row-gap: 20px;">
+                <table id="parameters_table_replacable">
+                    <tr>
+                        <td>Pokaż centrum:</td>
+                        <td><input id="show_center" type="checkbox" checked onchange="showCenter(this.checked)"/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Szybkość animacji:</td>
+                        <td><input id="speed_slider" class="slider" type="range" min="0.1" max="10" step="0.1" value="3" oninput="speed_value.value=this.value"/></td>
+                        <td style="width: 35px;"><output id="speed_value" for="speed_slider">3</output></td>
+                    </tr>
+                    <tr>
+                        <td>Rozmiar nasion:</td>
+                        <td><input id="seed_size_slider" class="slider" type="range" min="1" max="10" step="1" value="3" oninput="seed_size_value.value=this.value" onchange="changeSeedSize(this.value)"/></td>
+                        <td><output id="seed_size_value" for="seed_size_slider">3</output></td>
+                    </tr>
+                    <tr>
+                        <td>Kolor nasion:</td>
+                        <td><input id="seed_color" class="pretty_color_picker" type="color" value="#000000" onchange="changeSeedColor(this.value)"/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Kolor tła:</td>
+                        <td><input id="background_color" class="pretty_color_picker" type="color" value="#ffffff" onchange="changeBackgroundColor(this.value)"/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>START:</td>
+                        <td><input id="start_value" type="number" form="" value="0" min="0" max="1" step="0.000001"/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>KONIEC:</td>
+                        <td><input id="end_value" type="number" form="" value="1" min="0" max="1" step="0.000001"/></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <div id="player">
+                    <input id="play_pause_button" type="button" onclick="toggle_animation_state()"/>
+                    <input id="stop_button" type="button" onclick="trigger_animation_end()"/>
+                </div>
+                <div id="save_wrapper" class="center">
+                    <div id="parameters_save_form">
+                        <input id="save_name" type="text" form="" placeholder="Nazwa zapisu"/>
+                        <input id="save_button" class="pretty_input" type="button" value="Zapisz parametry" style="width: 130px;" onclick="saveParameters(save_name.value, show_center.checked, speed_slider.value, seed_size_slider.value, seed_color.value, background_color.value, start_value.value, end_value.value)"/>
+                    </div>
+                    <text id="save_response" class="center"></text>
+                </div>
+            </form> 
+        </div>
+        
+    </div>
+</div>

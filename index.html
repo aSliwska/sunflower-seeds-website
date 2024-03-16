@@ -1,0 +1,30 @@
+<!DOCTYPE html>   
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Aleksandra Śliwska - Projekt</title>
+	<link rel="StyleSheet" href="main.css" type="text/css">
+	<script src="ajax.js" type="text/javascript"></script>
+</head>
+<body">
+	<div id="middle_bar">
+		<div id="login_buttons">
+			<input id="register_button" class="pretty_input" type="button" value="Rejestracja" onclick="loadView('/register')"/>
+			<input id="login_button" class="pretty_input" type="button" value="Logowanie" onclick="loadView('/login')"/>
+			<input id="profile_button" class="pretty_input" type="button" value="Profil" onclick="loadView('/profile')" style="display: none;"/>
+		</div>
+		<header id="header_bar"></header>
+		<div class="header_pattern middle_relative" style="background-color: #fe9d10;left: -590px;"></div>
+		<div class="header_pattern middle_relative" style="background-color: #bc540b;left: -670px;"></div>
+		<h2 id="header_text" class="middle_relative">Nasiona Słonecznika</h2>
+		<nav id="navigation_bar">
+			<form id="navigation_form">
+				<input class="nav_button" type="button" value="ANIMACJA" onclick="loadView('/animation')"/>
+				<input class="nav_button" type="button" value="FILM" onclick="loadView('/movie')"/>
+			</form>
+		</nav>
+		<div id="content"></div>
+	</div>
+	<footer>Autor strony: Aleksandra Śliwska</footer>
+</body>
+</html>
